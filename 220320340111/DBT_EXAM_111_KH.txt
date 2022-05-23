@@ -1,0 +1,208 @@
+Section 1
+
+
+1.create table DEPT
+    -> (
+    -> DEPTNO int(2),
+    -> DNAME varchar(20),
+    -> LOC varchar(10)
+    -> );
+
+insert into DEPT values (10,'ACCOUNTING','NEW YORK'),(20,'RESEARCH','DALLAS'),(30,'SALES','CHICAGO'),(40,'OPERATIONS','BOSTON');
+
++--------+------------+----------+
+| DEPTNO | DNAME      | LOC      |
++--------+------------+----------+
+|     10 | ACCOUNTING | NEW YORK |
+|     20 | RESEARCH   | DALLAS   |
+|     30 | SALES      | CHICAGO  |
+|     40 | OPERATIONS | BOSTON   |
++--------+------------+----------+
+
+2.create table EMP1(
+    -> EMPNO int(4) primary key,
+    -> ENAME varchar(10),
+    -> JOB varchar(9),
+    -> HIREDATE date,
+    -> SAL float(7,2),
+    -> COMM float(7,2),
+    -> DEPTNO int(2));
+
+
+ insert into EMP1 values (7839,'KING','MANAGER','1991-11-17',5000,NULL,10), (7698,'BLAKE','CLERK','1981-05-01',2850,NULL,30), (7782,'CLARK','MANAGER','1981-06-09',2450,NULL,10), (7566,'JONES','CLERK','1981-04-02',2975, NULL,20), (7654, 'MARTIN', 'SALESMAN','1981-09-28',1250,1400,30), (7499,'ALLEN','SALESMAN','1981-02-20',1600,300,30);
+
+
++-------+--------+----------+------------+---------+---------+--------+
+| EMPNO | ENAME  | JOB      | HIREDATE   | SAL     | COMM    | DEPTNO |
++-------+--------+----------+------------+---------+---------+--------+
+|  7499 | ALLEN  | SALESMAN | 1981-02-20 | 1600.00 |  300.00 |     30 |
+|  7566 | JONES  | CLERK    | 1981-04-02 | 2975.00 |    NULL |     20 |
+|  7654 | MARTIN | SALESMAN | 1981-09-28 | 1250.00 | 1400.00 |     30 |
+|  7698 | BLAKE  | CLERK    | 1981-05-01 | 2850.00 |    NULL |     30 |
+|  7782 | CLARK  | MANAGER  | 1981-06-09 | 2450.00 |    NULL |     10 |
+|  7839 | KING   | MANAGER  | 1991-11-17 | 5000.00 |    NULL |     10 |
++-------+--------+----------+------------+---------+---------+--------+
+
+Q.3
+
+select * from EMP1 where SAL BETWEEN 2500 and 5000;
+
+mysql> select * from EMP1 where SAL BETWEEN 2500 and 5000;
++-------+-------+---------+------------+---------+------+--------+
+| EMPNO | ENAME | JOB     | HIREDATE   | SAL     | COMM | DEPTNO |
++-------+-------+---------+------------+---------+------+--------+
+|  7566 | JONES | CLERK   | 1981-04-02 | 2975.00 | NULL |     20 |
+|  7698 | BLAKE | CLERK   | 1981-05-01 | 2850.00 | NULL |     30 |
+|  7839 | KING  | MANAGER | 1991-11-17 | 5000.00 | NULL |     10 |
++-------+-------+---------+------------+---------+------+--------+
+
+
+
+Q.4 select * from EMP1 order by ENAME desc;
+
++-------+--------+----------+------------+---------+---------+--------+
+| EMPNO | ENAME  | JOB      | HIREDATE   | SAL     | COMM    | DEPTNO |
++-------+--------+----------+------------+---------+---------+--------+
+|  7654 | MARTIN | SALESMAN | 1981-09-28 | 1250.00 | 1400.00 |     30 |
+|  7839 | KING   | MANAGER  | 1991-11-17 | 5000.00 |    NULL |     10 |
+|  7566 | JONES  | CLERK    | 1981-04-02 | 2975.00 |    NULL |     20 |
+|  7782 | CLARK  | MANAGER  | 1981-06-09 | 2450.00 |    NULL |     10 |
+|  7698 | BLAKE  | CLERK    | 1981-05-01 | 2850.00 |    NULL |     30 |
+|  7499 | ALLEN  | SALESMAN | 1981-02-20 | 1600.00 |  300.00 |     30 |
++-------+--------+----------+------------+---------+---------+--------+
+
+Q.5
+
+select lower(JOB) from EMP1;
+
++------------+
+| lower(JOB) |
++------------+
+| salesman   |
+| clerk      |
+| salesman   |
+| clerk      |
+| manager    |
+| manager    |
++------------+
+
+Q.6 
+
+select ENAME, LENGTH(ENAME) AS LengthOf_ENAME from EMP1;
+
++--------+----------------+
+| ENAME  | LengthOf_ENAME |
++--------+----------------+
+| ALLEN  |              5 |
+| JONES  |              5 |
+| MARTIN |              6 |
+| BLAKE  |              5 |
+| CLARK  |              5 |
+| KING   |              4 |
++--------+----------------+
+
+ Q.7
+ select DEPTNO, COUNT(*) from EMP1 GROUP BY DEPTNO;
++--------+----------+
+| DEPTNO | COUNT(*) |
++--------+----------+
+|     30 |        3 |
+|     20 |        1 |
+|     10 |        2 |
++--------+----------+
+
+
+Q.8
+
+select DNAME, ENAME from EMP1 join dept on(EMP1.DEPTNO = DEPT.DEPTNO);
++------------+--------+
+| DNAME      | ENAME  |
++------------+--------+
+| SALES      | ALLEN  |
+| RESEARCH   | JONES  |
+| SALES      | MARTIN |
+| SALES      | BLAKE  |
+| ACCOUNTING | CLARK  |
+| ACCOUNTING | KING   |
++------------+--------+
+
+
+
+Q.9
+
+ select ENAME, POSITION('AR' in ENAME) AS FIRST_AR from EMP1;
+
++--------+----------+
+| ENAME  | FIRST_AR |
++--------+----------+
+| ALLEN  |        0 |
+| JONES  |        0 |
+| MARTIN |        2 |
+| BLAKE  |        0 |
+| CLARK  |        3 |
+| KING   |        0 |
++--------+----------+
+
+
+Q.10
+
+select ENAME, SAL, SAL*0.1 AS HRA from EMP1;
+
++--------+---------+--------+
+| ENAME  | SAL     | HRA    |
++--------+---------+--------+
+| ALLEN  | 1600.00 | 160.00 |
+| JONES  | 2975.00 | 297.50 |
+| MARTIN | 1250.00 | 125.00 |
+| BLAKE  | 2850.00 | 285.00 |
+| CLARK  | 2450.00 | 245.00 |
+| KING   | 5000.00 | 500.00 |
++--------+---------+--------+
+
+
+
+
+section 2:
+
+Q.1
+
+ create table TEMPP
+    -> (
+    -> FIRST_STRING varchar(20),
+    -> SECOND_STRING varchar(20),
+    -> RESULT varchar(40)
+    -> );
+
+	 delimiter $$
+mysql> create procedure PROC1(str1 varchar(20), str2 varchar(20))
+    -> begin
+    -> if instr(str1,str2) > 0 then
+    -> insert into TEMPP values(str1, str2, 'STRING EXISTS IN STRING1');
+    -> elseif instr(str2,str1)> 0 then
+    -> insert into TEMPP values(str1,str2, 'STRING1/STRING2 DOES NOT EXISTS STRING2/STRING1');
+    -> end if;
+    -> end; $$
+
+
+Q.2
+
+ delimiter $$
+mysql> create function FUNC1(a1 float, a2 float, a3 float)
+    -> returns boolean
+    -> deterministic
+    -> begin
+    -> declare fl boolean;
+    -> if(a1+a2 <= a3) or (a1+a3 <= a2) or (a2+a3 <= a1) then
+    -> set fl= false;
+    -> else
+    -> set fl = true;
+    -> end if;
+    -> return fl;
+    -> end; $$
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> delimiter ;
+
+	
+
+
